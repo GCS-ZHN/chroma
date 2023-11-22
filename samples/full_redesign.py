@@ -9,7 +9,7 @@ from chroma import Chroma, Protein
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get('SLURM_JOBID', 'test')
+SLURM_JOBID=os.environ.get('SLURM_JOBID', os.getpid())
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 protein = Protein("FC-III-AAPC.pdb", device="cuda:0")
 chroma = Chroma(

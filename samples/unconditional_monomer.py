@@ -10,7 +10,7 @@ from chroma import Chroma
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get('SLURM_JOBID', 'test')
+SLURM_JOBID=os.environ.get('SLURM_JOBID', os.getpid())
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 chroma = Chroma(
     weights_backbone=local_model_dir / "chroma_backbone_v1.0.pt",
