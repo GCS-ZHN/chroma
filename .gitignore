@@ -32,3 +32,6 @@ config.json
 
 # ides
 .vscode
+
+# conda environment
+.conda/
