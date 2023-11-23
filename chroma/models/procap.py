@@ -706,6 +706,7 @@ def load_model(
     device: str = "cpu",
     strict: bool = False,
     strict_unexpected: bool = True,
+    **kwargs
 ) -> ProteinCaption:
     """Loads a ProCap model.
 
@@ -720,6 +721,8 @@ def load_model(
             strict option which doesn't allow for missing keys either. By
             default, we use this option rather than strict for ease of
             development when adding model features.
+        **kwargs: Additional keyword arguments to pass to the model class, It will
+            override the values in the model weights.
 
     Returns:
         model (ProteinCaption): Instance of `ProteinCaption` with loaded
@@ -732,6 +735,7 @@ def load_model(
         device=device,
         strict=strict,
         strict_unexpected=strict_unexpected,
+        **kwargs
     )
 
 

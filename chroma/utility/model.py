@@ -58,6 +58,7 @@ def load_model(
     strict=False,
     strict_unexpected=True,
     verbose=True,
+    **kwargs
 ):
     """Load model saved with save_model.
 
@@ -76,6 +77,8 @@ def load_model(
             default, we use this option rather than strict for ease of
             development when adding model features.
         verbose (bool, optional): Show outputs from download and loading. Default True.
+        **kwargs: Additional keyword arguments to pass to the model class, It will
+            override the values in the model weights.
 
     Returns:
         model (nn.Module): Torch model with loaded weights.
@@ -104,7 +107,9 @@ def load_model(
 
     # load model weights
     params = torch.load(weights, map_location="cpu")
-    model = model_class(**params["init_kwargs"]).to(device)
+    init_kwargs = params["init_kwargs"]
+    init_kwargs.update(kwargs)
+    model = model_class(**init_kwargs).to(device)
     missing_keys, unexpected_keys = model.load_state_dict(
         params["model_state_dict"], strict=strict
     )
