@@ -9,7 +9,8 @@ from chroma import Chroma, conditioners
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get("SLURM_JOBID", os.getpid())
+TEST_TASK_ID=os.environ.get("SLURM_JOBID", os.getpid())
+print("Test task id: ", TEST_TASK_ID)
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 conditioner = conditioners.SymmetryConditioner(G="C_3", num_chain_neighbors=2)
 chroma = Chroma(
@@ -24,4 +25,4 @@ protein = chroma.sample(
     sde_func='langevin',
     potts_symmetry_order=conditioner.potts_symmetry_order
     )
-protein.to(str(out_dir / f"conditional_monomer_{SLURM_JOBID}.pdb"))
+protein.to(str(out_dir / f"conditional_monomer_{TEST_TASK_ID}.pdb"))

@@ -6,14 +6,14 @@
 #SBATCH -o chroma_fold_design_%j.log
 #SBATCH -e chroma_fold_design_%j.err
 import appdirs
-import appdirs
 import os
 from chroma import Chroma, conditioners
 from chroma.models import graph_classifier
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get('SLURM_JOBID', os.getpid())
+TEST_TASK_ID=os.environ.get('SLURM_JOBID', os.getpid())
+print("Test task id: ", TEST_TASK_ID)
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 device = 'cuda:0'
 chroma = Chroma(
@@ -32,5 +32,5 @@ cath_conditioned_protein = chroma.sample(
     conditioner=conditioner,
     chain_lengths=[length]
 )
-cath_conditioned_protein.to(str(out_dir / f"fold_design_{SLURM_JOBID}.pdb"))
+cath_conditioned_protein.to(str(out_dir / f"fold_design_{TEST_TASK_ID}.pdb"))
 

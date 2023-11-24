@@ -12,7 +12,8 @@ from chroma.models import procap
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get('SLURM_JOBID', os.getpid())
+TEST_TASK_ID=os.environ.get('SLURM_JOBID', os.getpid())
+print("Test task id: ", TEST_TASK_ID)
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 lm_model_dir = Path(appdirs.user_cache_dir(
     "huggingface/hub/models--EleutherAI--gpt-neo-125m/snapshots/6cb0d322a3a484e99667e7cb240e22f1ac036b99"))
@@ -33,5 +34,5 @@ conditioner = conditioners.ProCapConditioner(caption, -1, model=procap_model)
 protein = chroma.sample(
     steps=200, chain_lengths=[length], conditioner=conditioner
 )
-protein.to(str(out_dir / f"procap_design_{SLURM_JOBID}.pdb"))
+protein.to(str(out_dir / f"procap_design_{TEST_TASK_ID}.pdb"))
 

@@ -9,7 +9,8 @@ from chroma import Chroma, Protein
 from pathlib import Path
 
 out_dir = Path.cwd()
-SLURM_JOBID=os.environ.get('SLURM_JOBID', os.getpid())
+TEST_TASK_ID=os.environ.get('SLURM_JOBID', os.getpid())
+print("Test task id: ", TEST_TASK_ID)
 local_model_dir = Path(appdirs.user_cache_dir("chroma/weights"))
 protein = Protein("FC-III-AAPC.pdb", device="cuda:0")
 chroma = Chroma(
@@ -19,4 +20,4 @@ chroma = Chroma(
 protein = chroma.sample(
     protein_init=protein
     )
-protein.to(str(out_dir / f"full_resample_{SLURM_JOBID}.pdb"))
+protein.to(str(out_dir / f"full_resample_{TEST_TASK_ID}.pdb"))
